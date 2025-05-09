@@ -19,6 +19,7 @@ import {setCredentials} from "@/store/slices/userSlice";
 import {saveToSecureStore} from "@/utils/secureStore";
 import {jwtParse} from "@/utils/jwtParse";
 import {IUser} from "@/interfaces/account";
+import LoadingOverlay from "@/components/LoadingOverlay";
 
 
 const LoginScreen = () => {
@@ -36,13 +37,13 @@ const LoginScreen = () => {
 
 
     const handleSignIp = async () => {
-        console.log("Вхід:", form);
+        //console.log("Вхід:", form);
         try {
 
             const res = await login({ ...form }).unwrap()
             // console.log("Result", resp);
             //const {data} = res;
-            console.log("data", res)
+            //console.log("data", res)
 
 
             await saveToSecureStore('authToken', res.token)
@@ -72,6 +73,7 @@ const LoginScreen = () => {
                         contentContainerStyle={{flexGrow: 1, paddingHorizontal: 20}}
                         keyboardShouldPersistTaps="handled"
                     >
+                        <LoadingOverlay visible={isLoading} />
                         <View
                             className="w-full flex justify-center items-center my-6"
                             style={{
@@ -109,7 +111,7 @@ const LoginScreen = () => {
 
                             {/* Кнопка "Реєстрація" */}
                             <TouchableOpacity
-                                onPress={() => router.replace("/explore")}
+                                onPress={() => router.replace("/register")}
                                 className="w-full bg-gray-300 p-4 rounded-lg mt-2"
                             >
                                 <Text className="text-black text-center text-lg font-medium">
